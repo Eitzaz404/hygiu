@@ -12,15 +12,13 @@ let gameActive = false;
 let targetInterval = null;
 let countdownInterval = null;
 let currentTarget = null;
+let targetTimeout;
 
-// Spawn a new target at random position
 function spawnTarget() {
     if (!gameActive) return;
     
-    // Remove existing target if any
     if (currentTarget) {
         currentTarget.remove();
-        // If missed (target disappeared without click), count as miss
         if (gameActive) {
             misses++;
             missesSpan.textContent = misses;
@@ -31,7 +29,6 @@ function spawnTarget() {
     const target = document.createElement('div');
     target.classList.add('target');
     
-    // Random position within gameArea (considering target size)
     const maxX = gameArea.clientWidth - 60;
     const maxY = gameArea.clientHeight - 60;
     const x = Math.random() * maxX;
@@ -42,22 +39,17 @@ function spawnTarget() {
     target.addEventListener('click', (e) => {
         e.stopPropagation();
         if (!gameActive) return;
-        // Successful click
         score += 10;
         scoreSpan.textContent = score;
         target.remove();
         currentTarget = null;
-        // Spawn next immediately
-        if (gameActive) {
-            clearTimeout(targetTimeout);
-            spawnTarget();
-        }
+        clearTimeout(targetTimeout);
+        if (gameActive) spawnTarget();
     });
     
     gameArea.appendChild(target);
     currentTarget = target;
     
-    // Auto-remove after 1.5 seconds if not clicked
     targetTimeout = setTimeout(() => {
         if (currentTarget === target && gameActive) {
             target.remove();
@@ -69,8 +61,6 @@ function spawnTarget() {
         }
     }, 1500);
 }
-
-let targetTimeout;
 
 function checkMissLimit() {
     if (misses >= 10) {
@@ -85,7 +75,6 @@ function startGame() {
     startBtn.disabled = true;
     messageDiv.textContent = "";
     
-    // Start timer
     countdownInterval = setInterval(() => {
         if (!gameActive) return;
         if (timeLeft <= 0) {
@@ -96,7 +85,6 @@ function startGame() {
         }
     }, 1000);
     
-    // Spawn first target
     spawnTarget();
 }
 
@@ -125,9 +113,3 @@ function resetGame() {
 }
 
 startBtn.addEventListener('click', startGame);
-
-// Ensure game area size is known when spawning
-window.addEventListener('resize', () => {
-    // If game active, reposition target? Not necessary, but to avoid out-of-bounds we could.
-    // For simplicity, we just reset if active? Better to just ignore.
-});
