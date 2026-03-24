@@ -3,23 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reaction Clicker | Fast Tap Game</title>
+    <title>Reaction Clicker | Eitzaz Hassan</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="game-container">
+        <!-- Personal Profile Section -->
+        <div class="profile">
+            <img src="profile.jpg" alt="Eitzaz Hassan" class="profile-img">
+            <div class="profile-info">
+                <h2>Eitzaz Hassan</h2>
+                <p>Reaction Master ⚡</p>
+            </div>
+        </div>
+
         <h1>⚡ Fast Tap Reaction Game ⚡</h1>
+
         <div class="stats">
             <div>Score: <span id="score">0</span></div>
             <div>Time Left: <span id="timer">30</span>s</div>
             <div>Misses: <span id="misses">0</span></div>
         </div>
+
         <div class="game-area" id="gameArea">
-            <!-- targets will appear here dynamically -->
+            <!-- targets appear here -->
         </div>
+
         <button id="startBtn">Start Game</button>
         <div id="message"></div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
